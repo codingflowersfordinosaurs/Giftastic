@@ -1,58 +1,81 @@
-// NEED AN ARRAY OF TOPICS (for the gifs)
-var topics = ["Scooby-Doo", "Super Smash Bros", "Puppies"];
+// INITIAL ARRAY OF TOPICS
+var topics = ["dogs", "cats", "fish"];
 
-// NEED TO CREATE BUTTONS AND CLEAR BUTTONS
-function makeButtons() {
-  
-  // iterating through topics array using a for loop
+function displayGifInfo() {
+
+  var key = "api_key=K9B7VZVfI3exaWDJPkKk5AdqHzoUjE38";  
+  var topic = $(this).attr("data-name");
+  var queryUrl = "https://api.giphy.com/v1/gifs/search?q=" + topic +"&"+ key;
+
+  // CREATE AN AJAX CALL FOR THE SPECIFIC GIF BUTTON BEING CLICKED
+  $.ajax({
+    url: queryUrl,
+    method: "GET"
+  }).then(function(response) {
+    console.log(response);
+    // CREAT A DIV TO HOLD THE TOPIC
+    var topicDiv = $("<div class='topic>");
+
+    // STORING THE RATING DATA
+    var rating = response.rating;
+
+    // CREATING AN ELEMENT TO HAVE THE RATING DISPLAYED
+    var pOne = $("<p>").text("Rating: " + rating);
+
+    // DISPLAYING THE RATING
+    topicDiv.append(pOne);
+
+    // RETRIEVING THE URL FOR THE GIF
+    var gifURL = response.url;
+
+    // CREATING AN ELEMENT TO HOLD THE GIF/IMAGE
+    var gif = $("<img>").attr("src", gifURL);
+
+    // APPENDING THE GIF
+    topicDiv.append(gif);
+
+    // PUTTING THE ENTIRE GIF ABOVE THE PREVIOUS GIFS
+    $("#gifs-view").prepend(topicDiv);
+  })
+}
+
+// displayGif
+function renderButtons() {
+  // DELETING THE TOPICS PRIOR TO ADDING NEW TOPIC
+  // NECESSARY OR WILL AVE REPEAT BUTTONS
+  $("#buttons-view").empty();
+
+  // LOOPING THROUGH THE ARRAY OF TOPICS
   for (var i = 0; i < topics.length; i++) {
-    // make making the button using jQuery and button tag
-    var createB = $("<button>");
-    createB.addClass("btn");
-    createB.addClass("the-button");
-    createB.text(topics[i]);
-    createB.attr("data-name", topics[i]);
-    $("#buttons").append(createB);
+    // dynamically generating buttons for each movie in the array
+    // this code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
+    var a = $("<button>");
+    // ADDING A CLASS OF GIF-BTN TO OUR BUTTON
+    a.addClass("gif-btn");
+    // ADDING A DATA-ATTRIBUTE
+    a.attr("data-name", topics[i]);
+    // PROCIDING THE INITIAL BUTTON TEXT
+    a.text(topics[i]);
+    // ADDING THE BUTTON TO THE buttons-view div
+    $("#buttons-view").append(a);
   }
 }
 
-// NEED TO SHOW THE GIFS WHEN BTN CLASS IS CLICKED...so an event listener .on("click", ...)
-$(document).on("click", ".btn", showGifs);
+// FUNCTION HANDLES EVENTS WHERE THE GIF BUTTON IS CLICKED
+$("#add-gif").on("click", function(event) {
+  event.preventDefault();
+  // grabbing the input from the textbox
+  var topic = $("#gif-input").val().trim();
 
-// NEED A FUNCTION SO GIPHS DON'T AUTOMATICALLY SHOW ON PAGE W/OUT INPUT & SEARCH; + QUERYURL AND AJAX STUFF
-function () {
-  // NEED TO LOAD THE API FUNCTION
-  function showGifs() {
-    var key = "api_key=K9B7VZVfI3exaWDJPkKk5AdqHzoUjE38";  
-    var gif = $(this).attr("data-name");
-    var queryUrl = "https://api.giphy.com/v1/gifs/search?q=";
+  // ADDING MOVIE FROM TEXTBOX TO ARRAY
+  topics.push(topic);
 
-    // NEED TO CLEAR OUT THE PREVIOUS BUTTON GIFS
-    $("#gifView").empty();
+  // CALLING RENDERBUTTONS WHICH HANDLES THE PROCESSING OF OUR TOPICS ARRAY
+  renderButtons();
+});
 
-    $.ajax ({
-      url:
-      queryUrl + gif + "&" + key + "&" + "limit=10",
-      method: "GET"
-    })
-    .then(function(response) {
-      console.log(response);
+// ADD A CLICK EVENT LISTENER TO ALL ELEMENTS WITH A CLASS OF gif-btn
+$(document).on("click", ".gif-btn", displayGifInfo);
 
-      // NEE TO CREATE IMAGES FOR THE GIFS
-      for (var g = 0; g < response.data.length; g++) {
-        var results = response.data;
-        var gifDiv = $("<div>");
-        var p = $("<p>");
-        p.text("Rating: " + results[g].rating);
-        var image = $("<img>");
-        image.attr("src", results[g].images.original.url);
-        image.attr("alt", results[g].title);
-        gifDiv.append(p);
-        gifDiv.addClass("inline-block");
-        $("#gifView").append(gifDiv);
-      }
-    });
-  }
-}
-
-
+// CALLING THE RENDERBUTTONS FUNCTION TO DISPLAY THE INITIAL BUTTONS
+renderButtons();
