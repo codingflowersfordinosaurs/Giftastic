@@ -5,7 +5,7 @@ function displayGifInfo() {
 
   var key = "api_key=K9B7VZVfI3exaWDJPkKk5AdqHzoUjE38";  
   var topic = $(this).attr("data-name");
-  var queryUrl = "https://api.giphy.com/v1/gifs/search?q=" + topic +"&"+ key;
+  var queryUrl = "https://api.giphy.com/v1/gifs/search?q=" + topic +"&"+ key + "&limit=10";
 
   // CREATE AN AJAX CALL FOR THE SPECIFIC GIF BUTTON BEING CLICKED
   $.ajax({
@@ -14,35 +14,36 @@ function displayGifInfo() {
   }).then(function(response) {
     console.log(response);
     // CREAT A DIV TO HOLD THE TOPIC
-    var topicDiv = $("<div class='topic>");
+    for (var j = 0; j < topics.length; j++) {
+      var topicDiv = $("<div class='topic>");
 
-    // STORING THE RATING DATA
-    var rating = response.rating;
+      // STORING THE RATING DATA
+      var rating = response.rating;
 
-    // CREATING AN ELEMENT TO HAVE THE RATING DISPLAYED
-    var pOne = $("<p>").text("Rating: " + rating);
+      // CREATING A PARAGRAPH ELEMENT TO HAVE THE RATING DISPLAYED
+      var pOne = $("<p>").text("Rating: " + rating);
 
-    // DISPLAYING THE RATING
-    topicDiv.append(pOne);
+      // DISPLAYING THE RATING
+      topicDiv.append(pOne);
 
-    // RETRIEVING THE URL FOR THE GIF
-    var gifURL = response.url;
+      // RETRIEVING THE URL FOR THE GIF
+      var gifURL = response.data[j].images.fixed_height.url;
 
-    // CREATING AN ELEMENT TO HOLD THE GIF/IMAGE
-    var gif = $("<img>").attr("src", gifURL);
+      // CREATING AN ELEMENT TO HOLD THE GIF/IMAGE
+      var gif = $("<img>").attr("src", gifURL);
 
-    // APPENDING THE GIF
-    topicDiv.append(gif);
+      // APPENDING THE GIF
+      topicDiv.append(gif);
 
-    // PUTTING THE ENTIRE GIF ABOVE THE PREVIOUS GIFS
-    $("#gifs-view").prepend(topicDiv);
+      // PUTTING THE ENTIRE GIF ABOVE THE PREVIOUS GIFS
+      $("#gif-container").prepend(topicDiv);
+    }
   })
 }
 
-// displayGif
 function renderButtons() {
   // DELETING THE TOPICS PRIOR TO ADDING NEW TOPIC
-  // NECESSARY OR WILL AVE REPEAT BUTTONS
+  // NECESSARY OR WILL HAVE REPEAT BUTTONS
   $("#buttons-view").empty();
 
   // LOOPING THROUGH THE ARRAY OF TOPICS
@@ -59,6 +60,12 @@ function renderButtons() {
     // ADDING THE BUTTON TO THE buttons-view div
     $("#buttons-view").append(a);
   }
+  // UNBIND THE GIFS (with click event)***
+  $(".gif-pic").unbind("click");
+  $(".gif-pic").on("click", function() {
+    $(".gif-pic").unbind("click");
+    displayGifs($(this).text());
+  })
 }
 
 // FUNCTION HANDLES EVENTS WHERE THE GIF BUTTON IS CLICKED
@@ -67,7 +74,7 @@ $("#add-gif").on("click", function(event) {
   // grabbing the input from the textbox
   var topic = $("#gif-input").val().trim();
 
-  // ADDING MOVIE FROM TEXTBOX TO ARRAY
+  // ADDING MOVIE FROM TEXTBOX TO ARRAY 
   topics.push(topic);
 
   // CALLING RENDERBUTTONS WHICH HANDLES THE PROCESSING OF OUR TOPICS ARRAY
