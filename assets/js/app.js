@@ -6,7 +6,6 @@ function displayGifInfo() {
   var key = "api_key=K9B7VZVfI3exaWDJPkKk5AdqHzoUjE38";  
   var topic = $(this).attr("data-name");
   var queryUrl = "https://api.giphy.com/v1/gifs/search?q=" + topic +"&"+ key + "&limit=10";
-
   // CREATE AN AJAX CALL FOR THE SPECIFIC GIF BUTTON BEING CLICKED
   $.ajax({
     url: queryUrl,
