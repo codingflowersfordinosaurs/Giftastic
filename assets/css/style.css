@@ -1,0 +1,52 @@
+body{
+  background-image: url(../images/gifbackground.jpg);
+  background-size: cover;
+}
+
+.container {
+  margin: auto;
+}
+
+#page-title {
+  color: #ffffff;
+  font-size: 4em;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+#page-description {
+  color: #ffffff;
+  font-size: 2em;
+}
+form {
+  border: #ffffff 2px solid;
+}
+.row {
+  margin-bottom: 1em;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.gif-buttons {
+  font-size: 15px;
+  background-color: #1c5677;
+  color: #ffffff;
+  padding: 10px;
+}
+.gif-butttons:hover {
+  background-color: #3098d4;
+}
+
+#input-label {
+  font-size: 20px;
+  color: #ffffff;
+}
+#gif-input {
+  color: #000000;
+  font-size: 20px;
+}
+#add-gif {
+  color: white;
+  background-color: #000000;
+  font-size: 20px;
+  margin-top: 10px;
+}

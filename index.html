@@ -4,37 +4,45 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- BOOTSTRAP LINK -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- CSS LINKS -->
   <link rel="stylesheet" href="./assets/css/style.css">
   <link rel="stylesheet" href="./assets/css/reset.css">
+  <!-- TITLE -->
   <title>Giftastic</title>
 </head>
 <body>
   
   <div class="container">
-    <h1>Gif Search</h1>
+    <h1 id="page-title">Gif Search</h1>
+    <p id="page-description">Gifs of Animals (or any topic you want)</p>
+    <br><br>
     <!-- RENDERED BUTTONS WILL GET DUMPED HERE -->
     <div class="row">
-      <div id="buttons-view"></div>
+      <div class="col-lg-12">
+        <div id="gif-buttons"></div>
+      </div>
     </div>
     
     <div class="row">
-      <div class="col-lg-4">
+      <div class="col-lg-6">
+
         <form id="gif-form">
-          <label for="gif-input">Add Some Gifs!</label>
-          <input type="text" id="gif-input">
+          <label id="input-label" for="gif-input">Add Some Gifs!</label>
+          <input id="gif-input" type="text">
           <br>
-        
           <!-- BUTTON TRIGGERS NEW TOPIC TO BE ADDED -->
-          <input type="submit" id="add-gif" value="Add Some Gifs!">
+          <input id="add-gif" type="submit" value="Add Some Gifs Yo!">
         </form>
+
       </div>
-      <div class="col-lg-8"></div>
+      <div class="col-lg-6"></div>
     </div>
     
     <div class="row">
       <!-- the "gif dump" -->
-      <div class="gif-container col-lg-12"></div>
+      <div class="gifs col-lg-12"></div>
     </div>
 
   </div>
@@ -46,11 +54,6 @@
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
   integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" 
-  crossorigin="anonymous">
-  </script>
-
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
-  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
   crossorigin="anonymous">
   </script>
 
