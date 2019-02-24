@@ -1,5 +1,5 @@
-(function() {
-
+// (function() { // OG code
+$(document).ready(function () {
   //create the array of topics for the gifs
   var topics = ["puppies", "kittens", "fish"];
 
@@ -38,7 +38,7 @@
   renderButtons();
 ////////////////////////////////////////////////////////
   renderButtons();
-
+  moveGif();
   //load in the API function
   function gifMeMore() {
     var key = "api_key=K9B7VZVfI3exaWDJPkKk5AdqHzoUjE38";
@@ -71,7 +71,26 @@
     });
   }
 
-})();
+      // UNBIND THE GIFS (with click event)***
+    function moveGif() {
+      var frozen = $(this).attr("frozen");
+      var frozenp = $(this).attr("frozenp");
+      frozenp = parseInt(frozenp);
+
+      console.log(frozenp);
+      console.log(object.data[frozenp].imaged.fixed_height_still.url);
+
+      if (frozen === "still") {
+        console.log("working it");
+        $(this).attr("src", object.data[frozenp].images.fixed_height_still.url);
+        $(this).attr("frozen", "animate");
+      } else {
+        $(this).attr("src", object.data[frozenp].images.fixed_height_still.url);
+        $(this).attr("frozen", "still");
+      }
+    }
+
+});
 
 
 
