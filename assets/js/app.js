@@ -71,22 +71,26 @@ $(document).ready(function () {
     });
   }
 
-      // UNBIND THE GIFS (with click event)***
+      // UNBIND THE GIFS ***
     function moveGif() {
-      var frozen = $(this).attr("frozen");
-      var frozenp = $(this).attr("frozenp");
-      frozenp = parseInt(frozenp);
+      // var still = $(this).data("still");
+      // var animated = $(this).data("animated");
+      var gifState = $(this).data("type");
+      var stillURL = response.data[i].images.fixed_height_still.url;
+      var animateURL = response.data[i].images.fixed_height.url; 
+      // frozenp = parseInt(frozenp);
 
-      console.log(frozenp);
-      console.log(object.data[frozenp].imaged.fixed_height_still.url);
+      // console.log(frozenp);
+      // console.log(object.data[frozenp].imaged.fixed_height_still.url);
 
-      if (frozen === "still") {
-        console.log("working it");
-        $(this).attr("src", object.data[frozenp].images.fixed_height_still.url);
-        $(this).attr("frozen", "animate");
-      } else {
-        $(this).attr("src", object.data[frozenp].images.fixed_height_still.url);
-        $(this).attr("frozen", "still");
+      if (gifState === "still") {
+        $(this).attr("src", animateURL);
+        $(this).data("type", "animated");
+        console.log(gifState);
+      } else if (gifState === "animated") {
+        $(this).attr("src", stillURL);
+        $(this).data("type", "still");
+        console.log(gifState);
       }
     }
 
